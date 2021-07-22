@@ -30,7 +30,7 @@ object AppModule {
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .build()
-    }else{
+    } else {
         OkHttpClient
             .Builder()
             .build()
@@ -46,7 +46,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit) = retrofit.create(ApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 
     @Singleton
     @Provides

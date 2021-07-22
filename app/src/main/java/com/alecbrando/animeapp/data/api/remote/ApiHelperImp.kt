@@ -1,5 +1,7 @@
 package com.alecbrando.animeapp.data.api.remote
 
+import com.alecbrando.animeapp.data.api.models.Anime
+import com.alecbrando.animeapp.data.api.models.AnimeDetail
 import com.alecbrando.animeapp.data.api.models.TopAnime
 import retrofit2.Response
 import javax.inject.Inject
@@ -7,5 +9,6 @@ import javax.inject.Inject
 class ApiHelperImp @Inject constructor(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun getTopAnime(): Response<TopAnime> = apiService.getTopAnime()
+    override suspend fun getAnimeById(mal_id: Int): Response<AnimeDetail> = apiService.getAnimeById(mal_id)
 
 }

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
-
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.alecbrando.animeapp.ui.fragments.Home.HomeFragment"
@@ -29,10 +28,10 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.alecbrando.animeapp.ui.fragments.Detail.DetailFragment"
-        android:label="{title} Details"
+        android:label="Details"
         tools:layout="@layout/fragment_detail" >
         <argument
-            android:name="title"
-            app:argType="string" />
+            android:name="Anime"
+            app:argType="com.alecbrando.animeapp.data.api.models.Anime" />
     </fragment>
 </navigation>

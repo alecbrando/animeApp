@@ -4,5 +4,5 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class TopAnime(
-    val top: List<AnimeHome>
+    val top: List<Anime>
 )

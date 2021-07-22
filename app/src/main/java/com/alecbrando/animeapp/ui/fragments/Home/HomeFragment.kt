@@ -5,17 +5,23 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.alecbrando.animeapp.R
+import com.alecbrando.animeapp.data.api.models.Anime
 import com.alecbrando.animeapp.databinding.FragmentHomeBinding
-import com.alecbrando.animeapp.ui.viewmodels.ApiViewModel
+import com.alecbrando.animeapp.ui.viewmodels.AnimeEvent
+import com.alecbrando.animeapp.ui.viewmodels.HomeViewModel
 import com.alecbrando.animeapp.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), FeedAdapter.OnClickListener {
 
-    private val viewModel : ApiViewModel by viewModels()
+    private val viewModel : HomeViewModel by viewModels()
 
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -28,18 +34,26 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.res.observe(viewLifecycleOwner){ it ->
+
+        val adapter = FeedAdapter(this)
+        binding.apply {
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        }
+
+        viewModel.res.observe(viewLifecycleOwner){
             when(it.status){
                 Status.SUCCESS -> {
-                    Log.d("Home", it.data!!.top[0].title)
+                    adapter.submitList(it.data!!.top)
                 }
                 Status.ERROR -> {
                     Log.d("Home", "ERROR")
@@ -50,6 +64,16 @@ class HomeFragment : Fragment() {
             }
 
         }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.event.collect { event ->
+                when(event){
+                    is AnimeEvent.NavigateToDetailScreen -> {
+                        val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(event.anime)
+                        findNavController().navigate(action)
+                    }
+                }
+            }
+        }
     }
 
 
@@ -57,5 +81,12 @@ class HomeFragment : Fragment() {
         inflater.inflate(R.menu.top_tab_bar, menu)
 
     }
+
+    override fun itemClicked(anime: Anime) {
+        viewModel.animeTapped(anime)
+    }
+
+
+
 
 }
