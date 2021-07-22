@@ -18,7 +18,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val repo: AnimeRepo,
 ) : ViewModel() {
-
+    private var sort_type: String = "bypopularity"
     private val _res = MutableLiveData<Resource<TopAnime>>(Resource.loading(null))
     private val animeEvent = Channel<AnimeEvent>()
 
@@ -28,11 +28,11 @@ class HomeViewModel @Inject constructor(
         get() = _res
 
     init {
-        getTopAnime()
+        getTopAnime(sort_type)
     }
 
-    private fun getTopAnime() = viewModelScope.launch {
-            repo.getTopAnime().let {
+    private fun getTopAnime(sort_type: String) = viewModelScope.launch {
+            repo.getTopAnime(sort_type).let {
                 if(it.isSuccessful){
                     _res.postValue(Resource.success(it.body()))
                 } else {
@@ -45,11 +45,32 @@ class HomeViewModel @Inject constructor(
         animeEvent.send(AnimeEvent.NavigateToDetailScreen(anime))
     }
 
-
+    fun sortByItemSelected(sortBy: SortBy) {
+        when (sortBy) {
+            SortBy.BY_POPULARITY -> {
+                sort_type = "bypopularity"
+                getTopAnime(sort_type)
+            }
+            SortBy.UPCOMING -> {
+                sort_type = "upcoming"
+                getTopAnime(sort_type)
+            }
+            SortBy.MOVIES -> {
+                sort_type = "movie"
+                getTopAnime(sort_type)
+            }
+        }
+    }
 
 
 }
 
 sealed class AnimeEvent {
     data class NavigateToDetailScreen(val anime : Anime) : AnimeEvent()
+}
+
+enum class SortBy {
+    BY_POPULARITY,
+    UPCOMING,
+    MOVIES
 }

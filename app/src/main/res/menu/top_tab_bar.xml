@@ -4,9 +4,9 @@
     <item android:icon="@drawable/ic_baseline_search" android:title="Search" app:showAsAction="always" />
     <item android:title="Filter Options" android:icon="@drawable/ic_baseline_filter" app:showAsAction="always">
     <menu>
-        <item android:title="Popularity"/>
-        <item android:title="Upcoming" />
-        <item android:title="Movies"/>
+        <item android:id="@+id/action_sort_by_popularity" android:title="Popularity"/>
+        <item android:id="@+id/action_sort_by_upcoming" android:title="Upcoming" />
+        <item android:id="@+id/action_sort_by_movies" android:title="Movies"/>
     </menu>
     </item>
 </menu>

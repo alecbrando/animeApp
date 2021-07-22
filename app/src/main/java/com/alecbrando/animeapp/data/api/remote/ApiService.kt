@@ -8,8 +8,8 @@ import retrofit2.http.Path
 
 interface ApiService {
 
-    @GET("top/anime/1/bypopularity")
-    suspend fun getTopAnime() : Response<TopAnime>
+    @GET("top/anime/1/{sort_type}")
+    suspend fun getTopAnime(@Path("sort_type") sort_type : String) : Response<TopAnime>
 
     @GET("anime/{mal_id}")
     suspend fun getAnimeById(@Path("mal_id") mal_id : Int): Response<AnimeDetail>

@@ -11,9 +11,9 @@ data class AnimeDetail(
     val title: String,
     val image_url: String,
     val mal_id: Int,
-    val score: Double,
-    val rank: Int,
-    val popularity: Int,
-    val members: Int,
+    val score: Double?,
+    val rank: Int?,
+    val popularity: Int?,
+    val members: Int?,
     val synopsis: String
 ) : Parcelable

@@ -13,6 +13,7 @@ import com.alecbrando.animeapp.data.api.models.Anime
 import com.alecbrando.animeapp.databinding.FragmentHomeBinding
 import com.alecbrando.animeapp.ui.viewmodels.AnimeEvent
 import com.alecbrando.animeapp.ui.viewmodels.HomeViewModel
+import com.alecbrando.animeapp.ui.viewmodels.SortBy
 import com.alecbrando.animeapp.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -80,6 +81,24 @@ class HomeFragment : Fragment(), FeedAdapter.OnClickListener {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.top_tab_bar, menu)
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_sort_by_popularity -> {
+                viewModel.sortByItemSelected(SortBy.BY_POPULARITY)
+                return true
+            }
+            R.id.action_sort_by_upcoming -> {
+                viewModel.sortByItemSelected(SortBy.UPCOMING)
+                return true
+            }
+            R.id.action_sort_by_movies -> {
+                viewModel.sortByItemSelected(SortBy.MOVIES)
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun itemClicked(anime: Anime) {
