@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Home" android:icon="@drawable/ic_baseline_home"/>
-    <item android:title="Favorites" android:icon="@drawable/ic_baseline_fav" />
+    <item android:id="@+id/homeFragment" android:title="Home" android:icon="@drawable/ic_baseline_home"/>
+    <item android:id="@+id/favoritesFragment" android:title="Favorites" android:icon="@drawable/ic_baseline_fav" />
 </menu>

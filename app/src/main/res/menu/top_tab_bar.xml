@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:icon="@drawable/ic_baseline_search" android:title="Search" app:showAsAction="always" />
+    <item android:id="@+id/search" android:icon="@drawable/ic_baseline_search" android:title="Search" app:showAsAction="always" app:actionViewClass="android.widget.SearchView"  />
     <item android:title="Filter Options" android:icon="@drawable/ic_baseline_filter" app:showAsAction="always">
     <menu>
         <item android:id="@+id/action_sort_by_popularity" android:title="Popularity"/>

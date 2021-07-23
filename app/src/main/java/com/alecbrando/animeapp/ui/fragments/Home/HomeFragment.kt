@@ -1,20 +1,19 @@
 package com.alecbrando.animeapp.ui.fragments.Home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.alecbrando.animeapp.R
+import com.alecbrando.animeapp.data.SortBy
 import com.alecbrando.animeapp.data.api.models.Anime
 import com.alecbrando.animeapp.databinding.FragmentHomeBinding
-import com.alecbrando.animeapp.ui.viewmodels.AnimeEvent
 import com.alecbrando.animeapp.ui.viewmodels.HomeViewModel
-import com.alecbrando.animeapp.ui.viewmodels.SortBy
-import com.alecbrando.animeapp.utils.Status
+import com.alecbrando.animeapp.utils.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -51,24 +50,28 @@ class HomeFragment : Fragment(), FeedAdapter.OnClickListener {
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         }
 
-        viewModel.res.observe(viewLifecycleOwner){
-            when(it.status){
-                Status.SUCCESS -> {
-                    adapter.submitList(it.data!!.top)
-                }
-                Status.ERROR -> {
-                    Log.d("Home", "ERROR")
-                }
-                Status.LOADING -> {
-                    Log.d("Home", "Loading")
-                }
-            }
+        viewModel.animeData.observe(viewLifecycleOwner){
+
+                adapter.submitList(it)
 
         }
+//        viewModel.res.observe(viewLifecycleOwner){
+//            when(it.status){
+//                Status.SUCCESS -> {
+//                    adapter.submitList(it.data!!.top)
+//                }
+//                Status.ERROR -> {
+//                    Log.d("Home", "ERROR")
+//                }
+//                Status.LOADING -> {
+//                    Log.d("Home", "Loading")
+//                }
+//            }
+//        }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.event.collect { event ->
                 when(event){
-                    is AnimeEvent.NavigateToDetailScreen -> {
+                    is HomeViewModel.AnimeEvent.NavigateToDetailScreen -> {
                         val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(event.anime)
                         findNavController().navigate(action)
                     }
@@ -81,20 +84,28 @@ class HomeFragment : Fragment(), FeedAdapter.OnClickListener {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.top_tab_bar, menu)
 
+        val searchItem = menu.findItem(R.id.search)
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.onQueryTextChanged {
+            viewModel.searchQuery.value = it
+        }
+
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_sort_by_popularity -> {
-                viewModel.sortByItemSelected(SortBy.BY_POPULARITY)
+                viewModel.onSortedOrderSelected(SortBy.BY_POPULARITY)
                 return true
             }
             R.id.action_sort_by_upcoming -> {
-                viewModel.sortByItemSelected(SortBy.UPCOMING)
+                viewModel.onSortedOrderSelected(SortBy.UPCOMING)
                 return true
             }
             R.id.action_sort_by_movies -> {
-                viewModel.sortByItemSelected(SortBy.MOVIES)
+                viewModel.onSortedOrderSelected(SortBy.MOVIES)
                 return true
             }
             else -> super.onOptionsItemSelected(item)
