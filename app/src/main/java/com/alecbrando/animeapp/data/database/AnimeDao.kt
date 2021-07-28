@@ -17,6 +17,6 @@ interface AnimeDao {
     fun getFavoriteAnime() : Flow<List<AnimeDetail>>
 
     @Query("SELECT * FROM favorite_anime WHERE mal_id IN (:id)")
-    fun getFavoriteAnimeById(id: Int) : Flow<AnimeDetail>
+    suspend fun getFavoriteAnimeById(id: Int) : AnimeDetail
 
 }
