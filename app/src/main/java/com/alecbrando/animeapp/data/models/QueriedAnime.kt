@@ -1,4 +1,4 @@
-package com.alecbrando.animeapp.data.api.models
+package com.alecbrando.animeapp.data.models
 
 import com.squareup.moshi.JsonClass
 

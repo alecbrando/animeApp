@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -95,5 +96,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.986"
         tools:text="In the year 2071, humanity has colonized several of the planets and moons of the solar system leaving the now uninhabitable surface of planet Earth behind. The Inter Solar System Police attempts to keep peace in the galaxy, aided in part by outlaw bounty hunters, referred to as Cowboys. The ragtag team aboard the spaceship Bebop are two such individuals. Mellow and carefree Spike Spiegel is balanced by his boisterous, pragmatic partner Jet Black as the pair makes a living chasing bounties and collecting rewards." />
+
+    <ImageView
+        android:id="@+id/favorite_icon"
+        android:layout_width="88dp"
+        android:visibility="visible"
+        android:layout_height="77dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_baseline_favorite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageview"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/favorite_icon_red"
+        android:layout_width="88dp"
+        android:visibility="invisible"
+        android:layout_height="77dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_baseline_favorite_red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageview"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

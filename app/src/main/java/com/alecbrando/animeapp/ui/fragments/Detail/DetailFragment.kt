@@ -1,7 +1,6 @@
 package com.alecbrando.animeapp.ui.fragments.Detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +28,7 @@ class DetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
 
@@ -49,9 +48,12 @@ class DetailFragment : Fragment() {
                         rank.text ="Rank: ${it.data.rank.toString()}"
                         popularity.text = "Popularity: ${it.data.popularity.toString()}"
                         synopsis.text = it.data.synopsis
+                        favoriteIcon.setOnClickListener {
+                            viewModel.addAnimeToFavorites()
+                        }
                     }
 
-                    Log.d("Detail",it.data!!.title)
+
                 }
                 Status.ERROR -> {
 

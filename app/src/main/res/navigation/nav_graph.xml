@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_favoritesFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_favoriteDetailFragment"
+            app:destination="@id/favoriteDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -32,6 +35,17 @@
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="Anime"
-            app:argType="com.alecbrando.animeapp.data.api.models.Anime" />
+            app:argType="com.alecbrando.animeapp.data.models.Anime" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteDetailFragment"
+        android:name="com.alecbrando.animeapp.ui.fragments.FavoriteDetail.FavoriteDetailFragment"
+        android:label="FavoriteDetailFragment" >
+        <argument
+            android:name="AnimeDetail"
+            app:argType="com.alecbrando.animeapp.data.models.AnimeDetail" />
+        <action
+            android:id="@+id/action_favoriteDetailFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
 </navigation>

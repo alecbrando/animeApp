@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.alecbrando.animeapp.R
 import com.alecbrando.animeapp.data.SortBy
-import com.alecbrando.animeapp.data.api.models.Anime
+import com.alecbrando.animeapp.data.models.Anime
 import com.alecbrando.animeapp.databinding.FragmentHomeBinding
 import com.alecbrando.animeapp.ui.viewmodels.HomeViewModel
 import com.alecbrando.animeapp.utils.onQueryTextChanged

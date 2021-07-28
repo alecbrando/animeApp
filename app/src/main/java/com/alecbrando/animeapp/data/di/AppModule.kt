@@ -1,9 +1,10 @@
 package com.alecbrando.animeapp.data.di
 
+import android.app.Application
+import androidx.room.Room
 import androidx.viewbinding.BuildConfig
-import com.alecbrando.animeapp.data.api.remote.ApiHelper
-import com.alecbrando.animeapp.data.api.remote.ApiHelperImp
 import com.alecbrando.animeapp.data.api.remote.ApiService
+import com.alecbrando.animeapp.data.database.FavoriteDatabase
 import com.alecbrando.animeapp.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -44,11 +45,14 @@ object AppModule {
         .client(okHttpClient)
         .build()
 
-    @Provides
     @Singleton
+    @Provides
     fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 
     @Singleton
     @Provides
-    fun provideApiHelper(apiHelper: ApiHelperImp): ApiHelper = apiHelper
+    fun provideDatabase(app: Application) = Room.databaseBuilder(app, FavoriteDatabase::class.java, "Favorite_DB").build()
+
+    @Provides
+    fun provideFavoriteDao(db: FavoriteDatabase) = db.AnimeDao()
 }

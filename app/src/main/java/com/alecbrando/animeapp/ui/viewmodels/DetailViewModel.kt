@@ -1,9 +1,10 @@
 package com.alecbrando.animeapp.ui.viewmodels
 
 import androidx.lifecycle.*
-import com.alecbrando.animeapp.data.api.models.Anime
-import com.alecbrando.animeapp.data.api.models.AnimeDetail
 import com.alecbrando.animeapp.data.api.repo.AnimeRepo
+import com.alecbrando.animeapp.data.database.AnimeDao
+import com.alecbrando.animeapp.data.models.Anime
+import com.alecbrando.animeapp.data.models.AnimeDetail
 import com.alecbrando.animeapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -12,6 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val repo: AnimeRepo,
+    private val animeDao: AnimeDao,
     private val state: SavedStateHandle
 ) : ViewModel() {
     private val anime = state.get<Anime>("Anime")
@@ -34,5 +36,10 @@ class DetailViewModel @Inject constructor(
             }
         }
     }
+
+    fun addAnimeToFavorites() = viewModelScope.launch {
+            animeDao.favoriteAnime(res.value?.data!!)
+    }
+
 
 }

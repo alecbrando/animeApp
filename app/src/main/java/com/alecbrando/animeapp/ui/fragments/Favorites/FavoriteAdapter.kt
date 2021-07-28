@@ -1,16 +1,17 @@
-package com.alecbrando.animeapp.ui.fragments.Home
+package com.alecbrando.animeapp.ui.fragments.Favorites
+
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.alecbrando.animeapp.data.models.Anime
+import com.alecbrando.animeapp.data.models.AnimeDetail
 import com.alecbrando.animeapp.databinding.AnimeListHolderHomeBinding
 import com.bumptech.glide.Glide
 
 
-class FeedAdapter(private val listener: OnClickListener) : ListAdapter<Anime, FeedAdapter.AnimeListHolder>(DiffCallback()) {
+class FavoriteAdapter(private val listener: OnClickListener) : ListAdapter<AnimeDetail, FavoriteAdapter.AnimeListHolder>(DiffCallback()) {
 
     inner class AnimeListHolder(private val binding: AnimeListHolderHomeBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -19,14 +20,14 @@ class FeedAdapter(private val listener: OnClickListener) : ListAdapter<Anime, Fe
                 imageView.setOnClickListener {
                     val position = adapterPosition
                     if(position != RecyclerView.NO_POSITION){
-                        val anime = getItem(position)
-                        listener.itemClicked(anime)
+                        val AnimeDetail = getItem(position)
+                        listener.itemClicked(AnimeDetail)
                     }
                 }
             }
         }
 
-        fun bind(anime: Anime) {
+        fun bind(anime: AnimeDetail) {
             binding.apply {
                 Glide.with(root).load(anime.image_url).into(imageView)
                 textView.text = anime.title
@@ -44,14 +45,15 @@ class FeedAdapter(private val listener: OnClickListener) : ListAdapter<Anime, Fe
     }
 
     interface OnClickListener {
-        fun itemClicked(anime: Anime)
+        fun itemClicked(anime: AnimeDetail)
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<Anime>() {
-        override fun areItemsTheSame(oldItem: Anime, newItem: Anime) = oldItem.mal_id == newItem.mal_id
+    class DiffCallback : DiffUtil.ItemCallback<AnimeDetail>() {
+        override fun areItemsTheSame(oldItem: AnimeDetail, newItem: AnimeDetail) = oldItem.mal_id == newItem.mal_id
 
 
-        override fun areContentsTheSame(oldItem: Anime, newItem: Anime) = oldItem == newItem
+        override fun areContentsTheSame(oldItem: AnimeDetail, newItem: AnimeDetail) = oldItem == newItem
     }
+
 
 }
